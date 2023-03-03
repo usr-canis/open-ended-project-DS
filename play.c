@@ -3,8 +3,6 @@
 #include <string.h>
 #include <windows.h>
 
-int i = 0;
-
 typedef struct node
 {
     char song_name[100];
@@ -42,11 +40,9 @@ void addnode(char song[])
         first = temp;
         tail = temp;
     }
-
-    i++;
 }
 
-void play()
+void playall()
 {
     current = head;
     while (current != NULL)
@@ -59,10 +55,11 @@ void play()
         if (status != 0)
         {
             printf("Error playing song: %s\n", current->song_name);
-            continue;
+            break;
         }
 
         printf("Now playing: %s\n", current->song_name);
+
         current = current->next;
     }
 }
@@ -89,16 +86,18 @@ int main()
             break;
 
         case 2:
-            while (1)
-            {
-                printf("Enter song name to play: ");
-                scanf("%s\n", song_name);
-                addnode(song_name);
-            }
+            printf("Enter song name to play: ");
+            scanf("%s", song_name);
+            addnode(song_name);
             break;
 
         case 3:
             play();
+            break;
+
+        case 6:
+            system("taskkill /IM vlc.exe /F");
+            exit(0);
         }
     }
 
